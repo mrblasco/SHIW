@@ -1,8 +1,2 @@
 
-```{r}
-data_dir <- "Data/storico_ascii"
-dat <- read.csv(paste(data_dir, "rfam.csv", sep='/'))
-
-# observations per year
-xtable(table(dat$ANNO))
-```
+# TO BE ADDED

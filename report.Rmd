@@ -3,7 +3,14 @@
 % February 5, 2017
 
 
-```{r}
+```{r observations}
+library(xtable)
+library(knitr)
+dat <- read.csv("Data/storico_ascii/rfam.csv")
+plot(table(dat$ANNO), ylab="Questionari")
+```
+
+```
 require(methods)
 require(np)
 
