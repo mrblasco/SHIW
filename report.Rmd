@@ -1,0 +1,42 @@
+% The Survey on Household Income and Wealth
+% Andrea Blasco
+% February 5, 2017
+
+
+```{r}
+require(methods)
+require(np)
+
+# Load data
+# library(incomeITA)
+# data(income)
+
+# Subset year 2000
+dat.2000 <- subset(income, ANNO==2000 & YL>0) 
+
+# OLS
+wage.ols <- lm(log(YL) ~ ETA + I(ETA^2), data=dat.2000)
+wage.ols.poly <- lm(log(YL) ~ poly(ETA, 3), data=dat.2000)
+
+#### Univariate nonparametric regression ####
+# Local constant (bandwidth least-squares cross-validation)
+wage.np.lc <- npreg(log(YL) ~ ETA, data=dat.2000
+          , regtype="lc", gradients=TRUE
+          , bwmethod="cv.ls")
+
+# Local linear (bandwidth least-squares cross-validation)
+wage.np.ll <- npreg(log(YL) ~ ETA, data=dat.2000
+          , regtype="ll", gradients=TRUE
+          , bwmethod="cv.ls")
+
+# Alternative bandwidth:
+# "cv.ls" specifies least-squares cross-validation, and 
+# "cv.aic" specifies  AIC cross-validation
+
+# Multivariate nonparametrics
+wage.mnp.ll <- npreg(log(YL) ~ ETA + SESSO + AREA5 + STUDIO
+          , data=dat.2000, subset=dat.2000$PAR=="capofamiglia"
+          , regtype="ll", gradients=TRUE
+          , bwmethod="cv.ls")
+
+```
